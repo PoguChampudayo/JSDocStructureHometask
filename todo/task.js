@@ -1,15 +1,16 @@
-input = document.querySelector('.tasks__input')
+form = document.querySelector('.tasks__control')
 list = document.querySelector('.tasks__list')
 
-input.addEventListener('keydown', (event) => {
-    if (event.key == 'Enter' && input.value.trim()) {
+form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    if (form.querySelector('input').value.trim()) {
 
         task = document.createElement('div')
         task.className = 'task'
 
         taskText = document.createElement('div')
         taskText.className = 'task__title'
-        taskText.innerText = input.value.trim()
+        taskText.innerText = form.querySelector('input').value.trim()
 
         taskClose = document.createElement('a')
         taskClose.href = '#'
@@ -22,7 +23,7 @@ input.addEventListener('keydown', (event) => {
         task.appendChild(taskText)
         task.appendChild(taskClose)
         list.appendChild(task)
-        input.value = ''
+        form.querySelector('input').value = ''
         
        
     }
