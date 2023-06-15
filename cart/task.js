@@ -17,23 +17,17 @@ for (let control of quantityControlsDec) {
     })
 }
 
-function addExistingProduct(cart, product) {
-    flag = true
-    for (item of cart.querySelectorAll('.cart__product')) {
-        if (item.getAttribute('data-id') == product.getAttribute('data-id')) {
-            cartCount = Number(item.querySelector('.cart__product-count').textContent)
-            productCount = Number(product.querySelector('.product__quantity-value').textContent)
-            item.querySelector('.cart__product-count').textContent = cartCount + productCount
-            flag = false
-        }
-    }
-    return flag
-}
-
 for (let button of addButtons) {
     button.addEventListener('click', () => {
         product = button.closest('.product')
-        if (addExistingProduct(cart, product)) {
+        cartProducts = Array.from(document.querySelectorAll('.cart__product'))
+        addingElement = cartProducts.find(elem => elem.getAttribute('data-id') == product.getAttribute('data-id'))
+        if (addingElement) {
+            count = product.querySelector('.product__quantity-value')
+            addingElementCount = addingElement.querySelector('.cart__product-count')
+            addingElementCount.textContent = Number(count.textContent) + Number(addingElementCount.textContent)
+        }
+        else {
             message = `
             <div class="cart__product" data-id="${product.getAttribute('data-id')}">
                 <img class="cart__product-image" src="${product.children[1].getAttribute('src')}">
